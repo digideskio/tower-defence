@@ -30,4 +30,18 @@ exports.Map = class Map {
     }, [-1, -1]);
   }
 
+  getValueOf(coordinates) {
+    const x = coordinates[0];
+    const y = coordinates[1];
+    return this.matrix[y][x];
+  }
+
+  isExit(coordinates) {
+    return -1 === getValueOf(coordinates);
+  }
+
+  isWalkable(coordinates) {
+    return 0 === this.getValueOf(variation);
+  }
+
 };
