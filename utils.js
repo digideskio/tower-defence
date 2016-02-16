@@ -4,6 +4,7 @@
 'use non-strict'; // !!!!
 
 const Path = require('./path');
+const Logger = require('./renderer').Logger;
 
 
 /**
@@ -16,33 +17,29 @@ const BORDERSIZE = 1;
 const BORDER = ' '.repeat(BORDERSIZE);
 
 var frame = '';
-var logs = '';
+var logger;
 var path = []; // array of coordinates
 
 function renderGame(state) {
+  logger = new Logger();
   renderMap(state.map)
-  renderCharacters(state.characters);
+  // renderCharacters(state.characters);
   renderFrame();
-  renderLogs();
+  logger.render();
 }
 
 function calculatePath(map) {
   const path = new Path(map);
-  path
-    .on('update', renderPath)
-  ;
+  // path
+  //   .on('update', renderPath)
+  // ;
   return path.sequence;
 
 }
 
 function renderPath(i) {
-  logs += 'path: ' + i + '\n';
+  logger.log('path: %s', i);
 }
-
-
-var path = {};
-
-path
 
 
 /**
@@ -55,8 +52,8 @@ function renderMap(map) {
   map.matrix.forEach(renderRow);
   // TODO: DIY
   frame += '◼︎'.repeat(length+(length*BORDERSIZE*2)+2) + '\n';
-  logs += 'enterance: ' + map.enterance + '\n';
-  logs += 'exit: ' + map.exit + '\n';
+  logger.log('enterance: %s', map.enterance);
+  logger.log('exit: %s', map.exit);
 }
 
 function renderRow(row) {
@@ -92,10 +89,4 @@ function renderFrame() {
 
 function clearTerminal() {
   return process.stdout.write('\033c');
-}
-
-function renderLogs() {
-  console.log('\n\n');
-  console.log(logs);
-  logs = ''; // Clear
 }

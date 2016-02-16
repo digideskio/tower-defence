@@ -36,7 +36,8 @@ setInterval(() => {
   utils.renderGame({map, characters});
 }, TIMESTEP);
 
-setTimeout(() => {
-  utils.calculatePath(map);
-});
+// setTimeout(() => {
+//   utils.calculatePath(map);
+// });
+
 
